@@ -66,19 +66,19 @@ class EEP(object):
         ''' Get value, based on the data in XML '''
         raw_value = self._get_raw(source, bitarray)
 
-#        rng = source.find('range')
-#        rng_min = float(rng.find('min').text)
-#        rng_max = float(rng.find('max').text)
+        rng = source.find('range')
+        rng_min = float(rng.find('min').text)
+        rng_max = float(rng.find('max').text)
 
-#        scl = source.find('scale')
-#        scl_min = float(scl.find('min').text)
-#        scl_max = float(scl.find('max').text)
+        scl = source.find('scale')
+        scl_min = float(scl.find('min').text)
+        scl_max = float(scl.find('max').text)
 
         return {
             source['shortcut']: {
                 'description': source.get('description'),
                 'unit': source['unit'],
-#                'value': (scl_max - scl_min) / (rng_max - rng_min) * (raw_value - rng_min) + scl_min,
+                'value': (scl_max - scl_min) / (rng_max - rng_min) * (raw_value - rng_min) + scl_min,
                 'raw_value': raw_value,
             }
         }
@@ -88,13 +88,13 @@ class EEP(object):
         raw_value = self._get_raw(source, bitarray)
 
         # Find value description.
-        value_desc = source.find('item', {'value': str(raw_value)}) or self._get_rangeitem(source, raw_value)
+#        value_desc = source.find('item', {'value': str(raw_value)}) or self._get_rangeitem(source, raw_value)
 
         return {
             source['shortcut']: {
                 'description': source.get('description'),
                 'unit': source.get('unit', ''),
-                'value': value_desc['description'].format(value=raw_value),
+#                'value': value_desc['description'].format(value=raw_value),
                 'raw_value': raw_value,
             }
         }
